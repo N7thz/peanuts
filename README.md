@@ -1,0 +1,1 @@
+A blog for studys and projects
