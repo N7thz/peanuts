@@ -1,10 +1,16 @@
-import { FormAddImageSchema, FormLoginSchema } from "@/schemas"
+import { ComponentProps, Dispatch, ReactNode, SetStateAction } from "react"
+import {
+    FormAddImageSchema, FormContactSchema, FormLoginSchema
+} from "@/schemas"
+import {
+    Target, VariantLabels, TargetAndTransition, Transition, AnimationControls
+} from "framer-motion"
 import { User } from "@prisma/client"
-import { ComponentProps, Dispatch, SetStateAction } from "react"
 import { z } from "zod"
 
 export type FormLoginType = z.infer<typeof FormLoginSchema>
 export type FormAddImageType = z.infer<typeof FormAddImageSchema>
+export type FormContactType = z.infer<typeof FormContactSchema>
 
 export interface getCredentialUserResponse {
     token: string
@@ -21,6 +27,14 @@ export interface NotHasFileProps {
     isError: boolean
 }
 
+export interface AnimationProps extends ComponentProps<"div"> {
+    children: ReactNode
+    initial?: boolean | Target | VariantLabels
+    whileInView?: VariantLabels | TargetAndTransition
+    exit?: TargetAndTransition | VariantLabels
+    transition?: Transition
+    animate?: AnimationControls | TargetAndTransition | VariantLabels | boolean;
+}
 
 export interface UpdateImageAvatarRequest {
     email: string
@@ -33,4 +47,15 @@ export interface AvatarAdminProps extends ComponentProps<"img"> {
 
 export interface GetAuthorizationRequest {
     setUser: Dispatch<SetStateAction<User | null>>
+}
+
+export interface SendEmailRequest {
+    subject: string
+    message: string
+}
+
+export interface ToasterProps extends ComponentProps<"div"> {
+    toaster_title: string
+    toaster_message: string
+    variant: "default" | "destructive" | undefined
 }

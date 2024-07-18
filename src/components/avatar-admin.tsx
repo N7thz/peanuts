@@ -1,8 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
-import { User, X } from "lucide-react"
+import { User } from "lucide-react"
 import { twMerge } from "tailwind-merge"
 import { AvatarAdminProps } from "@/@types"
-import { useImage } from "@/context/image-provider"
 
 export const AvatarAdmin = ({ className, src, fallBack }: AvatarAdminProps) => {
 

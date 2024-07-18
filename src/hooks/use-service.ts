@@ -2,12 +2,12 @@ import {
     FormLoginType,
     GetAuthorizationRequest,
     getCredentialUserResponse,
+    SendEmailRequest,
     UpdateImageAvatarRequest,
 } from "@/@types"
 import { User } from "@prisma/client"
 import axios, { AxiosResponse } from "axios"
 import { getCookie } from "cookies-next"
-import { Dispatch, SetStateAction } from "react"
 
 const token = getCookie("token")
 
@@ -41,9 +41,17 @@ export function useService() {
         return api.put(url, { email, avatarUrl })
     }
 
+    function sendEmail({ message, subject }: SendEmailRequest) {
+
+        const url = "/send-email"
+
+        return api.post(url, { message, subject })
+    }
+
     return {
         getCredentialUser,
         updateImageAvatar,
-        getAuthorization
+        getAuthorization,
+        sendEmail
     }
 }

@@ -14,3 +14,12 @@ export const FormAddImageSchema = z.object({
         message: "url too short."
     })
 })
+
+export const FormContactSchema = z.object({
+    subject: z.string().min(1, {
+        message: "Subject is mandatory."
+    }),
+    message: z.string().min(1, {
+        message: "Message is mandatory."
+    })
+})
