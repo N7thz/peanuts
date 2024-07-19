@@ -89,7 +89,7 @@ export const FormSendEmail = () => {
                         <Input
                             className={
                                 errors.subject &&
-                                "border-2 border-red-600 placeholder:text-red-600 italic"
+                                "border-2 border-destructive placeholder:text-destructive italic"
                             }
                             placeholder={
                                 errors.subject
@@ -107,7 +107,7 @@ export const FormSendEmail = () => {
                             className={twMerge(
                                 "max-h-[400px]",
                                 errors.message &&
-                                "border-2 border-red-600 placeholder:text-red-600 italic"
+                                "border-2 border-destructive placeholder:text-destructive italic"
                             )}
                             placeholder={
                                 errors.message

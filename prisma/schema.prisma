@@ -11,8 +11,9 @@ datasource db {
 model Post {
   id        String   @id @default(uuid())
   title     String
-  text      Boolean
+  text      String
   bannerUrl String?  @map("banner_url")
+  links     String[]
   createdAt DateTime @default(now()) @map("created_at")
 
   @@map("posts")

@@ -1,6 +1,9 @@
 import { ComponentProps, Dispatch, ReactNode, SetStateAction } from "react"
 import {
-    FormAddImageSchema, FormContactSchema, FormLoginSchema
+    FormAddImageSchema, 
+    FormAddPostSchema, 
+    FormContactSchema, 
+    FormLoginSchema
 } from "@/schemas"
 import {
     Target, VariantLabels, TargetAndTransition, Transition, AnimationControls
@@ -11,6 +14,7 @@ import { z } from "zod"
 export type FormLoginType = z.infer<typeof FormLoginSchema>
 export type FormAddImageType = z.infer<typeof FormAddImageSchema>
 export type FormContactType = z.infer<typeof FormContactSchema>
+export type FormAddPostType = z.infer<typeof FormAddPostSchema>
 
 export interface getCredentialUserResponse {
     token: string

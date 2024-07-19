@@ -5,7 +5,7 @@ import {
     SendEmailRequest,
     UpdateImageAvatarRequest,
 } from "@/@types"
-import { User } from "@prisma/client"
+import { Post, User } from "@prisma/client"
 import axios, { AxiosResponse } from "axios"
 import { getCookie } from "cookies-next"
 
@@ -48,10 +48,18 @@ export function useService() {
         return api.post(url, { message, subject })
     }
 
+    function getAllPosts(): Promise<AxiosResponse<Post>> {
+
+        const url = "/posts"
+
+        return api.get(url)
+    }
+
     return {
         getCredentialUser,
         updateImageAvatar,
         getAuthorization,
-        sendEmail
+        sendEmail,
+        getAllPosts
     }
 }

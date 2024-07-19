@@ -32,7 +32,7 @@ export function ImageProvider({ children }: { children: ReactNode }) {
         getAuthorization({ setUser })
             .then(res => {
                 const { status, data: user } = res
-  
+
                 if (status === 200) {
                     setUser(user)
                 }
