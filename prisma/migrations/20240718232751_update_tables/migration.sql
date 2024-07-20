@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "posts" ALTER COLUMN "text" SET DATA TYPE TEXT;

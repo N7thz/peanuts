@@ -1,14 +1,29 @@
-import { ComponentProps, Dispatch, ReactNode, SetStateAction } from "react"
 import {
-    FormAddImageSchema, 
-    FormAddPostSchema, 
-    FormContactSchema, 
+    ComponentProps,
+    Dispatch,
+    ReactNode,
+    SetStateAction
+} from "react"
+import {
+    FormAddImageSchema,
+    FormAddPostSchema,
+    FormContactSchema,
     FormLoginSchema
 } from "@/schemas"
 import {
-    Target, VariantLabels, TargetAndTransition, Transition, AnimationControls
+    Target,
+    VariantLabels,
+    TargetAndTransition,
+    Transition,
+    AnimationControls
 } from "framer-motion"
-import { User } from "@prisma/client"
+import {
+    FieldArrayWithId,
+    UseFieldArrayRemove,
+    UseFormRegister,
+    FieldErrors
+} from "react-hook-form"
+import { Post, User } from "@prisma/client"
 import { z } from "zod"
 
 export type FormLoginType = z.infer<typeof FormLoginSchema>
@@ -37,7 +52,7 @@ export interface AnimationProps extends ComponentProps<"div"> {
     whileInView?: VariantLabels | TargetAndTransition
     exit?: TargetAndTransition | VariantLabels
     transition?: Transition
-    animate?: AnimationControls | TargetAndTransition | VariantLabels | boolean;
+    animate?: AnimationControls | TargetAndTransition | VariantLabels | boolean
 }
 
 export interface UpdateImageAvatarRequest {
@@ -62,4 +77,20 @@ export interface ToasterProps extends ComponentProps<"div"> {
     toaster_title: string
     toaster_message: string
     variant: "default" | "destructive" | undefined
+}
+
+export interface ItemLinkArrayProps {
+    fields: FieldArrayWithId<FormAddPostType, "links", "id">[]
+    remove: UseFieldArrayRemove
+    register: UseFormRegister<FormAddPostType>
+    errors: FieldErrors<FormAddPostType>
+}
+
+export interface PostCardProps {
+    post: Post
+}
+
+export interface getLinkIdProps {
+    title: string
+    link: string
 }

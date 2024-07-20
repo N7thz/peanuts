@@ -6,12 +6,11 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "./ui/dialog"
-import { CardAddImage } from "./card-add-image"
 import { Button } from "./ui/button"
 import { FormAddPost } from "./form-add-post"
+import { ScrollArea } from "./ui/scroll-area"
 
 export const DialogAddPost = () => {
-
     return (
         <Dialog>
             <DialogTrigger asChild>
@@ -21,14 +20,16 @@ export const DialogAddPost = () => {
                     </Button>
                 </div>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
-                    <DialogTitle>Add Post</DialogTitle>
-                    <DialogDescription>
-                        Add a post for everybody see
-                    </DialogDescription>
-                </DialogHeader>
-                <FormAddPost />
+            <DialogContent className="sm:max-w-[425px] p-4">
+                <ScrollArea className="h-[600px]">
+                    <DialogHeader>
+                        <DialogTitle>Add Post</DialogTitle>
+                        <DialogDescription>
+                            Add a post for everybody see
+                        </DialogDescription>
+                    </DialogHeader>
+                    <FormAddPost />
+                </ScrollArea>
             </DialogContent>
         </Dialog>
     )

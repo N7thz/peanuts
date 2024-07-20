@@ -1,4 +1,5 @@
 import {
+    FormAddPostType,
     FormLoginType,
     GetAuthorizationRequest,
     getCredentialUserResponse,
@@ -55,11 +56,19 @@ export function useService() {
         return api.get(url)
     }
 
+    function createPost(post: FormAddPostType): Promise<AxiosResponse<Post>> {
+
+        const url = "/posts"
+
+        return api.post(url, post)
+    }
+
     return {
         getCredentialUser,
         updateImageAvatar,
         getAuthorization,
         sendEmail,
-        getAllPosts
+        getAllPosts,
+        createPost
     }
 }

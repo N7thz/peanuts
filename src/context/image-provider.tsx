@@ -33,9 +33,7 @@ export function ImageProvider({ children }: { children: ReactNode }) {
             .then(res => {
                 const { status, data: user } = res
 
-                if (status === 200) {
-                    setUser(user)
-                }
+                if (status === 200) setUser(user)
             })
             .catch(err => console.log(err))
     }, [])

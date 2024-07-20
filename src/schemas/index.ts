@@ -68,5 +68,20 @@ export const FormAddPostSchema = z.object({
         })
         .max(255, {
             message: "text much large"
-        })
+        }),
+    links: z
+        .array(
+            z.object({
+                title: z
+                    .string()
+                    .max(255, {
+                        message: "text much large"
+                    }),
+                link: z
+                    .string()
+                    .max(255, {
+                        message: "text much large"
+                    })
+            })
+        )
 })

@@ -1,12 +1,12 @@
 "use client"
 
-import { api, useService } from "@/hooks/use-service"
-import { FormSendEmail } from "./form-send-email"
+import { api } from "@/hooks/use-service"
 import { useQuery } from "@tanstack/react-query"
 import { Post } from "@prisma/client"
 import { useImage } from "@/context/image-provider"
-import { Button } from "./ui/button"
+import { FormSendEmail } from "./form-send-email"
 import { DialogAddPost } from "./dialog-add-post"
+import { PostCard } from "./post-card"
 
 export const Main = () => {
 
@@ -34,9 +34,21 @@ export const Main = () => {
         className="size-full animate-pulse bg-secondary"
     />
 
+    if (!posts) return
+
     return (
-        <main className="p-6">
+        <main className="p-6 space-y-5">
             {user && <DialogAddPost />}
+            <div className="space-y-5">
+                {
+                    posts.map(post =>
+                        <PostCard
+                            key={post.id}
+                            post={post}
+                        />
+                    )
+                }
+            </div>
             <FormSendEmail />
         </main>
     )

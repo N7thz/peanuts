@@ -8,17 +8,6 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model Post {
-  id        String   @id @default(uuid())
-  title     String
-  text      String
-  bannerUrl String?  @map("banner_url")
-  links     String[]
-  createdAt DateTime @default(now()) @map("created_at")
-
-  @@map("posts")
-}
-
 model User {
   id        String  @id @default(uuid())
   avatarUrl String? @map("avatar_url")
@@ -27,4 +16,25 @@ model User {
   role      String
 
   @@map("users")
+}
+
+model Post {
+  id        String   @id @default(uuid())
+  title     String
+  text      String
+  bannerUrl String?  @map("banner_url")
+  links     Link     @relation(fields: [linkId], references: [id])
+  createdAt DateTime @default(now()) @map("created_at")
+  linkId    String
+
+  @@map("posts")
+}
+
+model Link {
+  id    String @id @default(uuid())
+  title String
+  link  String
+  Post  Post[]
+
+  @@map("links")
 }

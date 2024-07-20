@@ -1,27 +1,37 @@
 /* eslint-disable @next/next/no-img-element */
-import { useForm } from "react-hook-form"
+import { useForm, useFieldArray } from "react-hook-form"
+import { twMerge } from "tailwind-merge"
+import { ExternalLink } from "lucide-react"
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 import { Textarea } from "./ui/textarea"
 import { Card } from "./ui/card"
+import { ErrorSpan } from "./error-span"
 import { FormAddPostType } from "@/@types"
 import { FormAddPostSchema } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
-import Image from "next/image"
-import { ErrorSpan } from "./error-span"
-import { twMerge } from "tailwind-merge"
-import { empty } from "@prisma/client/runtime/library"
+import { ItemLinkArray } from "./itens-link-array"
+import { Post } from "@prisma/client"
+import { useService } from "@/hooks/use-service"
 
 export const FormAddPost = () => {
+
+    const { createPost } = useService()
 
     const {
         register,
         handleSubmit,
         watch,
+        control,
         formState: { errors }
     } = useForm<FormAddPostType>({
         resolver: zodResolver(FormAddPostSchema)
+    })
+
+    const { fields, append, remove } = useFieldArray({
+        name: "links",
+        control
     })
 
     const url = watch("image_url") ?? "/images/cat.webp"
@@ -29,16 +39,24 @@ export const FormAddPost = () => {
     function addPost(data: FormAddPostType) {
 
         console.log(data)
+
+        createPost(data)
+            .then(res => {
+                const { status } = res
+
+                if (status === 200) {
+                    window.location.reload()
+                }
+            })
+            .catch(err => console.log(err))
     }
 
-    console.log(url)
-
-    console.log(errors)
+    const isUrlExist = !url || url === ""
 
     return (
         <form
             onSubmit={handleSubmit(addPost)}
-            className="flex flex-col items-end gap-5 mt-4"
+            className="flex flex-col items-end gap-5 mt-4 p-2"
         >
             <div className="w-full flex flex-col gap-3">
                 <Label>Image url</Label>
@@ -52,10 +70,7 @@ export const FormAddPost = () => {
                 url === "/images/cat.webp" && "animate-pulse"
             )}>
                 <img
-                    src={
-                        (!url || url === "")
-                            ? "/images/cat.webp" : url
-                    }
+                    src={isUrlExist ? "/images/cat.webp" : url}
                     alt="image-preview"
                     className={twMerge(
                         "h-32 rounded-md",
@@ -89,12 +104,29 @@ export const FormAddPost = () => {
                     <ErrorSpan message={errors.text.message} />
                 }
             </div>
-            <Button
-                type="submit"
-                className="w-1/2"
-            >
-                Confirm
-            </Button>
+            <ItemLinkArray
+                errors={errors}
+                fields={fields}
+                register={register}
+                remove={remove}
+            />
+            <div className="w-full flex gap-5">
+                <Button
+                    type="button"
+                    className="w-1/2 flex items-center justify-center gap-2"
+                    onClick={() => append({ title: "", link: "" })}
+                    disabled={fields.length === 1}
+                >
+                    <span>Add links</span>
+                    <ExternalLink className="size-4" />
+                </Button>
+                <Button
+                    type="submit"
+                    className="w-1/2"
+                >
+                    Confirm
+                </Button>
+            </div>
         </form>
     )
 }
