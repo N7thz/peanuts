@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
             postCreated,
             {
                 status: 200,
-                statusText: "Sucess"
+                statusText: "success"
             }
         )
     }

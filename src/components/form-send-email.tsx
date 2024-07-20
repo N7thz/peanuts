@@ -130,7 +130,7 @@ export const FormSendEmail = () => {
             {
                 isOpen &&
                 <Toaster
-                    toaster_title="sucess"
+                    toaster_title="success"
                     toaster_message="The email has been sent successfully."
                     variant="default"
                     className="border border-primary"

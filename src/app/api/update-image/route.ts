@@ -6,7 +6,7 @@ export async function PUT(request: NextRequest) {
 
     const { email, avatarUrl }: UpdateImageAvatarRequest = await request.json()
 
-    const newUser = await prisma.user.update({
+    const imageUpdated = await prisma.user.update({
         where: {
             email
         },
@@ -15,7 +15,7 @@ export async function PUT(request: NextRequest) {
         }
     })
 
-    if (newUser) {
+    if (imageUpdated) {
         return new NextResponse(
             "The image has been successfully updated.",
             {
