@@ -1,6 +1,5 @@
-import { PostCardProps } from "@/@types"
+import { PostProps } from "@/@types"
 import { format } from "date-fns"
-import { Ellipsis } from "lucide-react"
 import {
     Card,
     CardContent,
@@ -8,12 +7,11 @@ import {
     CardHeader,
     CardTitle
 } from "./ui/card"
-import { Button } from "./ui/button"
+import { PopoverOptionsPost } from "./popover-options-post"
 import { useImage } from "@/context/image-provider"
 import Image from "next/image"
-import { DialogOptionsPost } from "./popover-options-post"
 
-export const PostCard = ({ post }: PostCardProps) => {
+export const PostCard = ({ post }: PostProps) => {
 
     const { id, title, text, bannerUrl, createdAt } = post
 
@@ -43,7 +41,7 @@ export const PostCard = ({ post }: PostCardProps) => {
                     </CardTitle>
                     {
                         user &&
-                        <DialogOptionsPost />
+                        <PopoverOptionsPost post={post} />
                     }
                 </div>
                 <CardDescription>

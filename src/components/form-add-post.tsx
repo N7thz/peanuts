@@ -12,12 +12,9 @@ import { FormAddPostType } from "@/@types"
 import { FormAddPostSchema } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ItemLinkArray } from "./itens-link-array"
-import { Post } from "@prisma/client"
-import { useService } from "@/hooks/use-service"
+import { createPost } from "@/hooks/use-service"
 
 export const FormAddPost = () => {
-
-    const { createPost } = useService()
 
     const {
         register,

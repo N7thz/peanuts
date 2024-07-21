@@ -7,7 +7,7 @@ import {
     DialogTrigger,
 } from "./ui/dialog"
 import { AvatarAdmin } from "./avatar-admin"
-import { CardAddImage } from "./card-add-image"
+import { FormAddImage } from "./form-add-image"
 import { useImage } from "@/context/image-provider"
 
 export const DialogImageAvatar = () => {
@@ -36,7 +36,7 @@ export const DialogImageAvatar = () => {
                         Add a image for your avatar
                     </DialogDescription>
                 </DialogHeader>
-                <CardAddImage />
+                <FormAddImage />
             </DialogContent>
         </Dialog>
     )

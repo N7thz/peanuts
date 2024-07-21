@@ -84,25 +84,3 @@ export async function PUT(request: NextRequest) {
         )
     }
 }
-
-export async function DELETE(request: NextRequest) {
-
-    const { id } = await request.json()
-
-    const decoded = validateToken(request)
-
-    if (decoded) {
-
-        const postDeleted = await prisma.post.delete({
-            where: id
-        })
-
-        if (postDeleted) return NextResponse.json(
-            "Deleted",
-            {
-                status: 204,
-                statusText: "Deleted"
-            }
-        )
-    }
-}

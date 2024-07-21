@@ -6,7 +6,7 @@ import { twMerge } from "tailwind-merge"
 import { Check, XCircle } from "lucide-react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FormContactSchema } from "@/schemas"
-import { useService } from "@/hooks/use-service"
+import { sendEmail } from "@/hooks/use-service"
 import { FormContactType } from "@/@types"
 import {
     Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle
@@ -22,8 +22,6 @@ export const FormSendEmail = () => {
     const [isSend, setIsSend] = useState<boolean>(false)
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const [isError, setIsError] = useState<boolean>(false)
-
-    const { sendEmail } = useService()
 
     const {
         register,
@@ -60,6 +58,7 @@ export const FormSendEmail = () => {
                         setTimeout(() => setIsError(false), 2000)
                     }
                 })
+                .catch(err => console.log(err))
         } else {
 
             const timeout = 1000 * 60 * 10 // timeout for send email
@@ -138,7 +137,8 @@ export const FormSendEmail = () => {
                     <Check />
                 </Toaster>
             }
-            {isError &&
+            {
+                isError &&
                 <Toaster
                     toaster_title="error"
                     toaster_message="An error occurred while sending the email."

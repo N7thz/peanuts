@@ -10,7 +10,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "./ui/card"
 import { Eye, EyeOff } from "lucide-react"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { useRouter } from "next/navigation"
-import { useService } from "@/hooks/use-service"
+import { getCredentialUser } from "@/hooks/use-service"
 import { FormLoginType } from "@/@types"
 import { setCookie } from "cookies-next"
 import { AlertError } from "./alert-error"
@@ -23,7 +23,6 @@ export const FormLogin = () => {
     const [isError, setIsError] = useState<boolean>(false)
 
     const { push } = useRouter()
-    const { getCredentialUser } = useService()
 
     const Icon = isVisible ? Eye : EyeOff
 
@@ -41,19 +40,17 @@ export const FormLogin = () => {
 
         getCredentialUser(data)
             .then(res => {
-                const { data: { token, email }, status } = res
+                const { data: { token }, status } = res
 
                 console.log(token)
 
                 if (status === 200) {
                     setCookie("token", token)
-                    setCookie("email", email)
 
                     push("/")
                 }
             })
             .catch(() => {
-
                 setIsError(true)
                 setTimeout(() => setIsError(false), 2000)
             })

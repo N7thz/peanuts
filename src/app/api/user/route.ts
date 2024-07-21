@@ -23,13 +23,13 @@ export async function PUT(request: NextRequest) {
                 statusText: "Image added successfully."
             }
         )
-    } else {
-        return new NextResponse(
-            "error",
-            {
-                status: 500,
-                statusText: "Error updating image."
-            }
-        )
     }
+
+    return new NextResponse(
+        "error",
+        {
+            status: 400,
+            statusText: "Error updating image."
+        }
+    )
 }

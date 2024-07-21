@@ -1,6 +1,6 @@
 "use client"
 
-import { useService } from "@/hooks/use-service"
+import { getAuthorization } from "@/hooks/use-service"
 import { User } from "@prisma/client"
 import {
     Dispatch,
@@ -25,8 +25,6 @@ export function ImageProvider({ children }: { children: ReactNode }) {
 
     const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
     const [user, setUser] = useState<User | null>(null)
-
-    const { getAuthorization } = useService()
 
     useEffect(() => {
         getAuthorization({ setUser })

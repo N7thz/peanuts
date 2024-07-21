@@ -12,7 +12,6 @@ export const Toaster = ({
 }: ToasterProps) => {
     return (
         <Animation
-            className="absolute bottom-2 right-2"
             initial={{ opacity: 0, y: 200 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 200 }}
@@ -21,11 +20,11 @@ export const Toaster = ({
             <Alert
                 variant={variant}
                 className={twMerge(
-                    "w-[40vw] flex justify-center items-center normal-case drop-shadow-2xl z-50 bg-zinc-50 dark:bg-zinc-950",
+                    "w-[400px] flex justify-center items-center normal-case drop-shadow-2xl z-50 bg-zinc-50 dark:bg-zinc-950",
                     className
                 )}
             >
-                <span>
+                <span className="mr-3">
                     {children}
                 </span>
                 <div>

@@ -17,7 +17,6 @@ export const Main = () => {
     } = useQuery({
         queryKey: ["get-all-posts"],
         queryFn: async () => {
-
             const url = "/posts"
 
             const response: Post[] = await api.get(url)

@@ -86,11 +86,22 @@ export interface ItemLinkArrayProps {
     errors: FieldErrors<FormAddPostType>
 }
 
-export interface PostCardProps {
+export interface PostProps {
     post: Post
 }
 
 export interface getLinkIdProps {
     title: string
     link: string
+}
+
+export interface DialogOptionsPostProps extends ComponentProps<"div"> {
+    trigger: ReactNode
+    title: string
+    description?: string
+}
+
+export interface DeletePostButtonProps extends PostProps {
+    setIsDeleted:  Dispatch<SetStateAction<boolean>>
+    setIsNotDeleted:  Dispatch<SetStateAction<boolean>>
 }

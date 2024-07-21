@@ -1,7 +1,6 @@
 import { useState } from "react"
-import { useService } from "@/hooks/use-service"
-import { getCookie } from "cookies-next"
-import { Check, X } from "lucide-react"
+import { updateImageAvatar } from "@/hooks/use-service"
+import { Check, X, XCircle } from "lucide-react"
 import { Input } from "./ui/input"
 import { Button } from "./ui/button"
 import { AvatarAdmin } from "./avatar-admin"
@@ -12,13 +11,17 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { Card } from "./ui/card"
 import { DialogFooter } from "./ui/dialog"
+import { ErrorSpan } from "./error-span"
+import { Toaster } from "./toaster"
+import { twMerge } from "tailwind-merge"
 
-
-export const CardAddImage = () => {
+export const FormAddImage = () => {
 
     const { setAvatarUrl, avatarUrl, user } = useImage()
-    
-    const [url, setUrl] = useState<string>(user?.avatarUrl!)
+
+    const [url, setUrl] = useState<string>(user!.avatarUrl!)
+    const [isOpen, setIsOpen] = useState<boolean>(false)
+    const [isError, setIsError] = useState<boolean>(false)
 
     const {
         register,
@@ -27,30 +30,40 @@ export const CardAddImage = () => {
         reset,
         formState: { errors }
     } = useForm<FormAddImageType>({
-        resolver: zodResolver(FormAddImageSchema),
-        defaultValues: {
-            url: user?.avatarUrl!
-        }
+        resolver: zodResolver(FormAddImageSchema)
     })
-
-    console.log(errors)
-
-    const { updateImageAvatar } = useService()
 
     async function updateImageAdim() {
 
         if (!avatarUrl) return
 
-        const email = getCookie("email") as string
+        const { email } = user!
 
         updateImageAvatar({ avatarUrl, email })
             .then(res => {
                 const { status, data } = res
 
                 console.log(data)
+
+                if (status == 200) {
+
+                    setIsOpen(true)
+
+                    reset()
+
+                    setTimeout(() => setIsOpen(false), 2000)
+                    setTimeout(() => window.location.reload(), 3000)
+                } else {
+
+                    setIsError(true)
+
+                    setTimeout(() => setIsError(false), 2000)
+                }
             })
             .catch(err => console.log(err))
     }
+
+    console.log(url)
 
     function addImage(data: FormAddImageType) {
 
@@ -76,6 +89,7 @@ export const CardAddImage = () => {
                         <Input
                             type="text"
                             placeholder="Enter the url of the image..."
+                            defaultValue={url}
                             className="py-0"
                             {...register("url")}
                         />
@@ -86,6 +100,10 @@ export const CardAddImage = () => {
                             {url ? <X /> : <Check />}
                         </Button>
                     </div>
+                    {
+                        errors.url &&
+                        <ErrorSpan message={errors.url.message} />
+                    }
                     <AvatarAdmin
                         src={url}
                         fallBack={
@@ -102,6 +120,34 @@ export const CardAddImage = () => {
                     Save changes
                 </Button>
             </DialogFooter>
+            {
+                isOpen &&
+                <Toaster
+                    toaster_title="success"
+                    toaster_message="The email has been sent successfully."
+                    variant="default"
+                    className={twMerge(
+                        "absolute -bottom-[140px] -right-[300px] z-50 border border-primary ",
+                        "xl:-bottom-[190px] xl:-right-[560px]"
+                    )}
+                >
+                    <Check />
+                </Toaster>
+            }
+            {
+                isError &&
+                <Toaster
+                    toaster_title="error"
+                    toaster_message="An error occurred while sending the email."
+                    variant="destructive"
+                    className={twMerge(
+                        "absolute -bottom-[140px] -right-[300px] z-50 border border-primary ",
+                        "xl:-bottom-[190px] xl:-right-[560px]"
+                    )}
+                >
+                    <XCircle />
+                </Toaster>
+            }
         </>
     )
 }

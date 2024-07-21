@@ -24,7 +24,7 @@ model Post {
   text      String
   bannerUrl String?  @map("banner_url")
   links     Link     @relation(fields: [linkId], references: [id])
-  createdAt DateTime @default(now()) @map("created_at")
+  createdAt DateTime @unique @default(now()) @map("created_at")
   linkId    String
 
   @@map("posts")

@@ -14,20 +14,19 @@ export async function POST(request: NextRequest) {
         }
     })
 
-    if (!user) {
-
-        return new NextResponse(
-            "error",
-            {
-                status: 400,
-                statusText: "Invalid email or password"
-            }
-        )
-    }
+    if (!user) return new NextResponse(
+        "error",
+        {
+            status: 400,
+            statusText: "Invalid email or password"
+        }
+    )
 
     const isPasswordCorretly = await compare(password, user.password)
 
     if (user && isPasswordCorretly) {
+
+        const { email } = user
 
         const KEY = process.env.JWT_KEY!
 
@@ -35,7 +34,7 @@ export async function POST(request: NextRequest) {
 
         return NextResponse.json({
             token,
-            email: user.email
+            email
         })
     }
 }   

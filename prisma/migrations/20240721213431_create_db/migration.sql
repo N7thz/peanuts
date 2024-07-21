@@ -7,7 +7,7 @@ CREATE TABLE "users" (
     "role" TEXT NOT NULL,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
-)
+);
 
 -- CreateTable
 CREATE TABLE "posts" (
@@ -19,7 +19,7 @@ CREATE TABLE "posts" (
     "linkId" TEXT NOT NULL,
 
     CONSTRAINT "posts_pkey" PRIMARY KEY ("id")
-)
+);
 
 -- CreateTable
 CREATE TABLE "links" (
@@ -28,10 +28,13 @@ CREATE TABLE "links" (
     "link" TEXT NOT NULL,
 
     CONSTRAINT "links_pkey" PRIMARY KEY ("id")
-)
+);
 
 -- CreateIndex
-CREATE UNIQUE INDEX "users_email_key" ON "users"("email")
+CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "posts_created_at_key" ON "posts"("created_at");
 
 -- AddForeignKey
-ALTER TABLE "posts" ADD CONSTRAINT "posts_linkId_fkey" FOREIGN KEY ("linkId") REFERENCES "links"("id") ON DELETE RESTRICT ON UPDATE CASCADE
+ALTER TABLE "posts" ADD CONSTRAINT "posts_linkId_fkey" FOREIGN KEY ("linkId") REFERENCES "links"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
