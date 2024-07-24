@@ -20,7 +20,10 @@ export const PostCard = ({ post }: PostProps) => {
     const { user } = useImage()
 
     return (
-        <Card key={id}>
+        <Card
+            key={id}
+            className="overflow-hidden"
+        >
             {
                 bannerUrl
                     ? <Image

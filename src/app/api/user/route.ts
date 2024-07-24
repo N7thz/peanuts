@@ -1,12 +1,56 @@
 import { UpdateImageAvatarRequest } from "@/@types"
 import { prisma } from "@/lib/prisma"
+import { validateToken } from "@/lib/validate-token"
+import { User } from "@prisma/client"
+import { hash } from "bcryptjs"
 import { NextRequest, NextResponse } from "next/server"
+
+export async function POST(request: NextRequest) {
+
+    const { email, password }: User = await request.json()
+
+    console.log({ email, password })
+
+    const user = await prisma.user.findUnique({
+        where: {
+            role: "ADMIN"
+        }
+    })
+
+    console.log(user)
+
+    if (user) {
+        return NextResponse.json("ADMIN already exist", {
+            status: 400
+        })
+    }
+
+    console.log("sexo")
+
+    const newUser = await prisma.user.create({
+        data: {
+            email,
+            password: await hash(password, 6),
+            role: "ADMIN"
+        }
+    })
+
+    return NextResponse.json(newUser)
+}
 
 export async function PUT(request: NextRequest) {
 
     const { email, avatarUrl }: UpdateImageAvatarRequest = await request.json()
 
-    const imageUpdated = await prisma.user.update({
+    const decoded = validateToken(request)
+
+    if (!decoded) return NextResponse.json(
+        "unauthorized", {
+        status: 401,
+        statusText: "Error in request"
+    })
+
+    await prisma.user.update({
         where: {
             email
         },
@@ -15,21 +59,11 @@ export async function PUT(request: NextRequest) {
         }
     })
 
-    if (imageUpdated) {
-        return new NextResponse(
-            "The image has been successfully updated.",
-            {
-                status: 200,
-                statusText: "Image added successfully."
-            }
-        )
-    }
-
-    return new NextResponse(
-        "error",
+    return NextResponse.json(
+        "The image has been successfully updated.",
         {
-            status: 400,
-            statusText: "Error updating image."
+            status: 200,
+            statusText: "Image added successfully."
         }
     )
 }

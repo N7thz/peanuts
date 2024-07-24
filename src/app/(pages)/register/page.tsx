@@ -1,8 +1,8 @@
 import { Metadata } from "next"
-import { Login } from "@/components/login"
+import { Register } from "@/components/register"
 
 export const metadata: Metadata = {
-    title: "Peanuts blog | Login"
+    title: "Peanuts blog | register"
 }
 
 export default function Page() {
@@ -10,7 +10,7 @@ export default function Page() {
         <div
             className="min-h-screen flex items-center justify-center bg-background"
         >
-            <Login />
+            <Register />
         </div>
     )
 }

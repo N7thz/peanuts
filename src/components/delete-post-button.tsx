@@ -1,15 +1,39 @@
 import { Button } from "./ui/button"
 import { DeletePostButtonProps } from "@/@types"
 import { deletePost } from "@/hooks/use-service"
+import { Post } from "@prisma/client"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useRouter } from "next/navigation"
 
-export const DeletePostButton = ({ 
-    post, setIsDeleted , setIsNotDeleted
+export const DeletePostButton = ({
+    post, setIsDeleted, setIsNotDeleted
 }: DeletePostButtonProps) => {
 
-    const { createdAt } = post
+    const { id } = post
+    const { push } = useRouter()
+    const queryClient = useQueryClient()
 
-    function erasePost(createdAt: Date) {
-        deletePost(createdAt)
+    const {
+        mutateAsync: deletePostMutation,
+        isPending
+    } = useMutation({
+        mutationFn: async () => {
+            erasePost(id)
+        },
+        onSuccess: () => {
+            queryClient.setQueryData(["get-all-posts"], (posts: Post[]) => {
+                return posts.filter(post => post.id !== id)
+            })
+
+            push("/")
+        },
+        onError(error) {
+            console.log(error)
+        },
+    })
+
+    function erasePost(id: string) {
+        deletePost(id)
             .then(res => {
                 const { status } = res
 
@@ -26,8 +50,9 @@ export const DeletePostButton = ({
 
     return (
         <Button
-            className="w-1/2 gap-2"
-            onClick={() => erasePost(createdAt)}
+            className="w-1/2"
+            disabled={isPending}
+            onClick={() => deletePostMutation()}
         >
             Confirm
         </Button>

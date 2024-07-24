@@ -8,7 +8,8 @@ import {
     FormAddImageSchema,
     FormAddPostSchema,
     FormContactSchema,
-    FormLoginSchema
+    FormLoginSchema,
+    FormUpdatePostSchema
 } from "@/schemas"
 import {
     Target,
@@ -30,6 +31,7 @@ export type FormLoginType = z.infer<typeof FormLoginSchema>
 export type FormAddImageType = z.infer<typeof FormAddImageSchema>
 export type FormContactType = z.infer<typeof FormContactSchema>
 export type FormAddPostType = z.infer<typeof FormAddPostSchema>
+export type FormUpdatePostType = z.infer<typeof FormUpdatePostSchema>
 
 export interface getCredentialUserResponse {
     token: string
@@ -104,4 +106,10 @@ export interface DialogOptionsPostProps extends ComponentProps<"div"> {
 export interface DeletePostButtonProps extends PostProps {
     setIsDeleted:  Dispatch<SetStateAction<boolean>>
     setIsNotDeleted:  Dispatch<SetStateAction<boolean>>
+}
+
+export interface ContextProps {
+    params: {
+        id: string
+    }
 }

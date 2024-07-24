@@ -6,11 +6,15 @@ export async function GET(request: NextRequest) {
 
     const decoded = validateToken(request)
 
-    if (decoded) {
-        const users = await prisma.user.findMany()
+    if (!decoded) return NextResponse.json(
+        "unauthorized", {
+        status: 401,
+        statusText: "Error in request"
+    })
 
-        const [user] = users
+    const users = await prisma.user.findMany()
 
-        return NextResponse.json(user)
-    }
+    const [user] = users
+
+    return NextResponse.json(user)
 }

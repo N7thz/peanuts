@@ -1,13 +1,17 @@
-import { FormAddPostType } from "@/@types"
+import { FormAddPostType, FormUpdatePostType } from "@/@types"
 import { Post } from "@prisma/client"
 import { AxiosResponse } from "axios"
 import { api } from "."
 
-export function getAllPosts(): Promise<AxiosResponse<Post[]>> {
+export async function getAllPosts() {
 
     const url = "/posts"
 
-    return api.get(url)
+    const response: Post[] = await api.get(url)
+        .then(res => res.data)
+        .catch(err => console.log(err))
+
+    return response
 }
 
 export function createPost(post: FormAddPostType): Promise<AxiosResponse<Post>> {
@@ -17,9 +21,16 @@ export function createPost(post: FormAddPostType): Promise<AxiosResponse<Post>> 
     return api.post(url, post)
 }
 
-export function deletePost(createdAt: Date): Promise<AxiosResponse<void>>  {
+export function updatePost(post: FormUpdatePostType, id: string): Promise<AxiosResponse<Post>> {
 
-    const url = `/posts/${createdAt}`
+    const url = `/posts/${id}`
+
+    return api.put(url, post)
+}
+
+export function deletePost(id: string) {
+
+    const url = `/posts/${id}`
 
     return api.delete(url)
 }

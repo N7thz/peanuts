@@ -4,7 +4,7 @@ import { getAuthorization } from "./get-authorization"
 import { getCredentialUser } from "./login"
 import { getAllPosts, createPost, deletePost } from "./posts"
 import { sendEmail } from "./send-email"
-import { updateImageAvatar } from "./users"
+import { updateImageAvatar, postUser } from "./users"
 
 const token = getCookie("token")
 
@@ -22,5 +22,6 @@ export {
     sendEmail,
     getAllPosts,
     createPost,
-    deletePost
+    deletePost,
+    postUser
 }

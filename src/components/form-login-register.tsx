@@ -7,22 +7,24 @@ import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 import { Card, CardHeader, CardTitle, CardContent } from "./ui/card"
-import { Eye, EyeOff } from "lucide-react"
-import { useAutoAnimate } from "@formkit/auto-animate/react"
-import { useRouter } from "next/navigation"
-import { getCredentialUser } from "@/hooks/use-service"
+import { Eye, EyeOff, XCircle } from "lucide-react"
 import { FormLoginType } from "@/@types"
-import { setCookie } from "cookies-next"
-import { AlertError } from "./alert-error"
 import { FormLoginSchema } from "@/schemas"
+import { Toaster } from "./toaster"
+import { usePathname } from "next/navigation"
 
-export const FormLogin = () => {
+export interface FormLoginProps {
+    functionPage: (data: FormLoginType) => void
+    isError: boolean
+}
 
-    const [animationParent] = useAutoAnimate()
+export const FormLoginRegister = ({
+    functionPage, isError
+}: FormLoginProps) => {
+
+    const pathname = usePathname() as "/register" | "/login"
+
     const [isVisible, setIsVisible] = useState<boolean>(true)
-    const [isError, setIsError] = useState<boolean>(false)
-
-    const { push } = useRouter()
 
     const Icon = isVisible ? Eye : EyeOff
 
@@ -34,37 +36,16 @@ export const FormLogin = () => {
         resolver: zodResolver(FormLoginSchema)
     })
 
-    console.log(errors)
-
-    async function login(data: FormLoginType) {
-
-        getCredentialUser(data)
-            .then(res => {
-                const { data: { token }, status } = res
-
-                console.log(token)
-
-                if (status === 200) {
-                    setCookie("token", token)
-
-                    push("/")
-                }
-            })
-            .catch(() => {
-                setIsError(true)
-                setTimeout(() => setIsError(false), 2000)
-            })
-    }
+    console.log(pathname)
 
     return (
         <>
-            <form
-                ref={animationParent}
-                onSubmit={handleSubmit(login)}
-            >
+            <form onSubmit={handleSubmit(functionPage)}>
                 <Card>
                     <CardHeader>
-                        <CardTitle>Login</CardTitle>
+                        <CardTitle>
+                            {pathname === "/register" ? "Register" : "Login"}
+                        </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-6">
                         <div className="flex flex-col gap-2">
@@ -106,7 +87,18 @@ export const FormLogin = () => {
             </form>
             {
                 isError &&
-                <AlertError message="Invalid email or password" />
+                <Toaster
+                    variant="destructive"
+                    toaster_title="Error"
+                    toaster_message={
+                        pathname === "/register"
+                            ? "Admin already exist"
+                            : "Invalid email or password"
+                    }
+                    className="absolute bottom-4 right-4"
+                >
+                    <XCircle />
+                </Toaster>
             }
         </>
     )

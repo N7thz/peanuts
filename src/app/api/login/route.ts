@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
         }
     })
 
-    if (!user) return new NextResponse(
+    if (!user) return NextResponse.json(
         "error",
         {
             status: 400,

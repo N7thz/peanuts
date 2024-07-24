@@ -8,11 +8,16 @@ import { Card, CardFooter, CardHeader, CardTitle } from "./ui/card"
 import { DialogOptionsPost } from "./dialog-options-post"
 import { DeletePostButton } from "./delete-post-button"
 import { Toaster } from "./toaster"
+import { FormUpdatePost } from "./form-update-post"
+import { ScrollArea } from "./ui/scroll-area"
 
 export const PopoverOptionsPost = ({ post }: PostProps) => {
 
     const [isDeleted, setIsDeleted] = useState<boolean>(false)
     const [isNotDeleted, setIsNotDeleted] = useState<boolean>(false)
+    const [isUpdated, setIsUpdated] = useState<boolean>(false)
+    const [isNotUpdated, setIsNotUpdated] = useState<boolean>(false)
+
 
     return (
         <>
@@ -26,9 +31,19 @@ export const PopoverOptionsPost = ({ post }: PostProps) => {
                     align="end"
                     className="flex gap-3"
                 >
-                    <Button variant="ghost">
-                        <Pen />
-                    </Button>
+                    <DialogOptionsPost
+                        title="Update"
+                        description="update a post"
+                        trigger={
+                            <Button variant="ghost">
+                                <Pen />
+                            </Button>
+                        }
+                    >
+                        <ScrollArea className="max-h-[500px]">
+                            <FormUpdatePost post={post} />
+                        </ScrollArea>
+                    </DialogOptionsPost>
                     <DialogOptionsPost
                         title="Delete"
                         description="delete a post"
