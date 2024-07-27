@@ -18,7 +18,7 @@ export const Main = () => {
         queryKey: ["get-all-posts"],
         queryFn: getAllPosts
     })
-
+    
     if (isLoading || !posts) return <LoadingCard />
 
     return (

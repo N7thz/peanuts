@@ -4,6 +4,33 @@ import { updatePost } from "@/lib/update-post"
 import { validateToken } from "@/lib/validate-token"
 import { NextRequest, NextResponse } from "next/server"
 
+export async function GET(request: NextRequest, context: ContextProps) {
+
+    const decoded = validateToken(request)
+
+    if (!decoded) return NextResponse.json(
+        "unauthorized", {
+        status: 401,
+        statusText: "Error in request"
+    })
+
+    const { params: { id } } = context
+
+    const post = await prisma.post.findUnique({
+        where: {
+            id
+        }
+    })
+
+    if (post) return NextResponse.json(
+        post,
+        {
+            status: 200,
+            statusText: "success"
+        }
+    )
+}
+
 export async function PUT(request: NextRequest, context: ContextProps) {
 
     const decoded = validateToken(request)

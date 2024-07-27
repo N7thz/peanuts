@@ -2,9 +2,12 @@ import axios from "axios"
 import { getCookie } from "cookies-next"
 import { getAuthorization } from "./get-authorization"
 import { getCredentialUser } from "./login"
-import { getAllPosts, createPost, deletePost } from "./posts"
+import { 
+    getAllPosts, createPost, deletePost, getPostById, updatePost 
+} from "./posts"
 import { sendEmail } from "./send-email"
 import { updateImageAvatar, postUser } from "./users"
+import { getBanner } from "./get-banner"
 
 const token = getCookie("token")
 
@@ -23,5 +26,8 @@ export {
     getAllPosts,
     createPost,
     deletePost,
-    postUser
+    postUser,
+    getBanner,
+    getPostById, 
+    updatePost 
 }

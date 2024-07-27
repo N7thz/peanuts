@@ -10,6 +10,7 @@ import {
 import { PopoverOptionsPost } from "./popover-options-post"
 import { useImage } from "@/context/image-provider"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 
 export const PostCard = ({ post }: PostProps) => {
 
@@ -18,11 +19,13 @@ export const PostCard = ({ post }: PostProps) => {
     const createdAtFormated = format(createdAt, "PPPP")
 
     const { user } = useImage()
+    const { push } = useRouter()
 
     return (
         <Card
             key={id}
-            className="overflow-hidden"
+            className="overflow-hidden hover:scale-95 duration-300 cursor-pointer"
+            onClick={() => push(`/posts/${id}`)}
         >
             {
                 bannerUrl &&

@@ -32,11 +32,9 @@ export const FormSendEmail = () => {
         resolver: zodResolver(FormContactSchema)
     })
 
-    async function formSendEmail(data: FormContactType) {
+    async function formSendEmail({ message, subject }: FormContactType) {
 
         if (!isSend) {
-
-            const { message, subject } = data
 
             setIsSend(true)
 
@@ -45,16 +43,11 @@ export const FormSendEmail = () => {
                     const { status } = res
 
                     if (status == 200) {
-
                         setIsOpen(true)
-
                         reset()
-
                         setTimeout(() => setIsOpen(false), 2000)
                     } else {
-
                         setIsError(true)
-
                         setTimeout(() => setIsError(false), 2000)
                     }
                 })
@@ -76,7 +69,8 @@ export const FormSendEmail = () => {
                     get in touch
                 </CardTitle>
                 <CardDescription className="normal-case">
-                    send an email regarding professional contacts, feedback and etc...
+                    send an email regarding professional contacts, 
+                    feedback and etc...
                 </CardDescription>
             </CardHeader>
             <form onSubmit={handleSubmit(formSendEmail)}>

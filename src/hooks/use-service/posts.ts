@@ -15,6 +15,18 @@ export async function getAllPosts() {
     return response
 }
 
+export async function getPostById(id: string): Promise<Post> {
+
+    const url = `/posts/${id}`
+
+    const response: Post = await api
+        .get(url)
+        .then(res => res.data)
+        .catch(err => console.log(err))
+
+    return response
+}
+
 export function createPost(post: FormAddPostType): Promise<AxiosResponse<Post>> {
 
     const url = "/posts"

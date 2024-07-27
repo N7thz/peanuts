@@ -3,10 +3,12 @@
 import { useState } from "react"
 import { CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { motion } from "framer-motion"
+import { useRouter } from "next/navigation"
 import { DialogImageAvatar } from "./dialog-image-avatar"
 import { useImage } from "@/context/image-provider"
+import { getBanner } from "@/hooks/use-service"
+import { useQuery } from "@tanstack/react-query"
 import Image from "next/image"
-import { useRouter } from "next/navigation"
 
 export const Header = () => {
 
@@ -23,14 +25,25 @@ export const Header = () => {
 
     const [isSelect, setIsSelect] = useState<string>(options[0])
 
+    const {
+        data: banner, isLoading
+    } = useQuery({
+        queryKey: ["get-banner"],
+        queryFn: getBanner
+    })
+
+    if (!banner || isLoading) return (
+        <div className="bg-secondary animate-pulse w-full h-[340px]" />
+    )
+
     return (
         <header className="h-1/4 w-full relative">
             <Image
-                src={"/images/banner.gif"}
+                src={banner}
                 width={1000}
                 height={500}
                 alt="banner image"
-                className="size-full"
+                className="w-full h-[340px]"
                 unoptimized
             />
             <CardHeader>

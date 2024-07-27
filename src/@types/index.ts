@@ -92,7 +92,7 @@ export interface ItemLinkArrayProps {
     errors: FieldErrors<FormAddPostType>
 }
 
-export interface PostProps {
+export interface PostProps extends ComponentProps<"div"> {
     post: Post
 }
 
