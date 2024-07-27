@@ -5,11 +5,11 @@ import { PostProps } from "@/@types"
 import { Button } from "./ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
 import { Card, CardFooter, CardHeader, CardTitle } from "./ui/card"
+import { ScrollArea } from "./ui/scroll-area"
 import { DialogOptionsPost } from "./dialog-options-post"
 import { DeletePostButton } from "./delete-post-button"
 import { Toaster } from "./toaster"
 import { FormUpdatePost } from "./form-update-post"
-import { ScrollArea } from "./ui/scroll-area"
 
 export const PopoverOptionsPost = ({ post }: PostProps) => {
 
@@ -40,7 +40,11 @@ export const PopoverOptionsPost = ({ post }: PostProps) => {
                         }
                     >
                         <ScrollArea className="max-h-[500px]">
-                            <FormUpdatePost post={post} />
+                            <FormUpdatePost
+                                post={post}
+                                setIsUpdated={setIsUpdated}
+                                setIsNotUpdated={setIsNotUpdated}
+                            />
                         </ScrollArea>
                     </DialogOptionsPost>
                     <DialogOptionsPost
@@ -85,6 +89,34 @@ export const PopoverOptionsPost = ({ post }: PostProps) => {
             }
             {
                 isNotDeleted &&
+                <Toaster
+                    toaster_title="error"
+                    toaster_message="An error occurred while delete a post."
+                    variant="destructive"
+                    className={twMerge(
+                        "absolute bottom-5 right-2 z-[150] border border-primary",
+                        "xl:-bottom-[190px] xl:-right-[560px]"
+                    )}
+                >
+                    <XCircle />
+                </Toaster>
+            }
+            {
+                isUpdated &&
+                <Toaster
+                    toaster_title="Updated"
+                    toaster_message="The post is updated."
+                    variant="default"
+                    className={twMerge(
+                        "absolute bottom-5 right-2 z-[150] border border-primary",
+                        "xl:-bottom-[190px] xl:-right-[560px]"
+                    )}
+                >
+                    <Check />
+                </Toaster>
+            }
+            {
+                isNotUpdated &&
                 <Toaster
                     toaster_title="error"
                     toaster_message="An error occurred while delete a post."

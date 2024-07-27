@@ -117,3 +117,9 @@ export interface ContextProps {
         id: string
     }
 }
+
+export interface FormUpdatePostProps { 
+    post: Post, 
+    setIsUpdated: Dispatch<SetStateAction<boolean>>
+    setIsNotUpdated: Dispatch<SetStateAction<boolean>>
+}

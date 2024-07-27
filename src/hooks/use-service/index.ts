@@ -8,6 +8,7 @@ import {
 import { sendEmail } from "./send-email"
 import { updateImageAvatar, postUser } from "./users"
 import { getBanner } from "./get-banner"
+import { getLinkById } from "./link"
 
 const token = getCookie("token")
 
@@ -29,5 +30,6 @@ export {
     postUser,
     getBanner,
     getPostById, 
-    updatePost 
+    updatePost,
+    getLinkById
 }

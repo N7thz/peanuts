@@ -5,15 +5,13 @@ export const validateToken = (request: NextRequest) => {
 
     const token = request.headers.get("authorization")
 
-    if (!token) return NextResponse.json(
-        "unauthorized", {
-        status: 401,
-        statusText: "Error in request"
-    })
+    if (!token) return null
 
     const KEY = process.env.JWT_KEY!
 
     const decoded = jwt.verify(token, KEY)
+
+    console.log(decoded)
 
     return decoded
 }

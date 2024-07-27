@@ -1,21 +1,28 @@
 /* eslint-disable @next/next/no-img-element */
 import { useForm } from "react-hook-form"
 import { twMerge } from "tailwind-merge"
+import { useRouter } from "next/navigation"
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
 import { Textarea } from "./ui/textarea"
 import { Card } from "./ui/card"
 import { ErrorSpan } from "./error-span"
-import { FormUpdatePostType, UpdatePostRequest } from "@/@types"
+import {
+    FormUpdatePostProps, FormUpdatePostType, UpdatePostRequest
+} from "@/@types"
 import { FormUpdatePostSchema } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { updatePost } from "@/hooks/use-service/posts"
-import { Post } from "@prisma/client"
-import { useRouter } from "next/navigation"
-import { getLinkId } from "@/lib/get-link-id"
 
-export const FormUpdatePost = ({ post: { id, linkId } }: { post: Post }) => {
+export const FormUpdatePost = ({
+    post: {
+        id,
+        linkId
+    },
+    setIsNotUpdated,
+    setIsUpdated
+}: FormUpdatePostProps) => {
 
     const { refresh } = useRouter()
 
@@ -40,9 +47,15 @@ export const FormUpdatePost = ({ post: { id, linkId } }: { post: Post }) => {
             .then(res => {
                 const { status } = res
 
-                if (status === 200) refresh()
+                if (status === 200) {
+                    setIsUpdated(true)
+                    setTimeout(() => refresh(), 2000)
+                }
             })
-            .catch(err => console.log(err))
+            .catch(() => {
+                setIsNotUpdated(true)
+                setTimeout(() => setIsNotUpdated(true), 2000)
+            })
     }
 
     return (

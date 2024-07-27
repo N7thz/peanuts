@@ -56,15 +56,11 @@ export const FormAddImage = () => {
                 if (status == 200) {
 
                     setIsOpen(true)
-
-                    reset()
-
                     setTimeout(() => setIsOpen(false), 2000)
-                    setTimeout(() => refresh(), 3000)
+                    setTimeout(() => refresh(), 2000)
                 } else {
 
                     setIsError(true)
-
                     setTimeout(() => setIsError(false), 2000)
                 }
             })

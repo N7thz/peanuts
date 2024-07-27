@@ -1,10 +1,13 @@
+import { ComponentProps } from "react"
 import { Card, CardHeader, CardContent } from "./ui/card"
+import { twMerge } from "tailwind-merge"
 
-export const LoadingCard = () => {
+export const LoadingCard = ({ className }: ComponentProps<"div">) => {
     return (
-        <Card
-            className="m-6 min-h-[480px] animate-pulse overflow-hidden"
-        >
+        <Card className={twMerge(
+            "m-6 min-h-[480px] animate-pulse overflow-hidden",
+            className
+        )}>
             <CardHeader
                 className="bg-secondary min-h-[300px] animate-pulse"
             />
