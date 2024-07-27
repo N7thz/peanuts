@@ -34,9 +34,7 @@ export const FormUpdatePost = ({ post: { id } }: { post: Post }) => {
             .then(res => {
                 const { status } = res
 
-                if (status === 200) {
-                    window.location.reload()
-                }
+                if (status === 200) window.location.reload()
             })
             .catch(err => console.log(err))
     }

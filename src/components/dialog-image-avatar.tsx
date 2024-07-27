@@ -14,7 +14,7 @@ export const DialogImageAvatar = () => {
 
     const { user } = useImage()
 
-    if (!user || !user.avatarUrl) return
+    if (!user) return
 
     const src = user.avatarUrl
 
@@ -23,7 +23,7 @@ export const DialogImageAvatar = () => {
             <DialogTrigger asChild>
                 <div>
                     <AvatarAdmin
-                        src={src}
+                        src={src ?? "/images/cat.webp"}
                         fallBack="AD"
                         className="absolute top-3 right-3 cursor-pointer hover:scale-125 duration-200"
                     />

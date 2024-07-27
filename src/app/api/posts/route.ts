@@ -3,8 +3,13 @@ import { FormAddPostType } from "@/@types"
 import { NextRequest, NextResponse } from "next/server"
 import { validateToken } from "@/lib/validate-token"
 import { getLinkId } from "@/lib/get-link-id"
+import { Link, Post } from "@prisma/client"
 
 export async function GET(request: NextRequest) {
+
+    
+
+    const post = await prisma.post.findFirst()
 
     const decoded = validateToken(request)
 
@@ -53,45 +58,4 @@ export async function POST(request: NextRequest) {
             }
         )
     }
-}
-
-export async function PUT(request: NextRequest) {
-
-    const decoded = validateToken(request)
-
-    if (!decoded) return NextResponse.json(
-        "unauthorized", {
-        status: 401,
-        statusText: "Error in request"
-    })
-
-    const postRequest = await request.json()
-
-    const { id, title, text, image_url, links: [link] } = postRequest
-
-    const linkId = await getLinkId(link)
-
-    const post = {
-        id,
-        title,
-        text,
-        linkId,
-        bannerUrl: image_url ?? null,
-        createdAt: new Date()
-    }
-
-    const postUpdated = await prisma.post.update({
-        where: {
-            id
-        },
-        data: post
-    })
-
-    if (postUpdated) return NextResponse.json(
-        postUpdated,
-        {
-            status: 200,
-            statusText: "Updated"
-        }
-    )
 }

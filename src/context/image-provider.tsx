@@ -1,6 +1,6 @@
 "use client"
 
-import { api, getAuthorization } from "@/hooks/use-service"
+import { api } from "@/hooks/use-service"
 import { User } from "@prisma/client"
 import { useQuery } from "@tanstack/react-query"
 import {
@@ -8,9 +8,7 @@ import {
     ReactNode,
     SetStateAction,
     createContext,
-    use,
     useContext,
-    useEffect,
     useState
 } from "react"
 
@@ -32,7 +30,8 @@ export function ImageProvider({ children }: { children: ReactNode }) {
 
             const url = "/get-authorization"
 
-            const response: User = await api.get(url)
+            const response: User = await api
+                .get(url)
                 .then(res => res.data)
                 .catch(err => console.log(err))
 

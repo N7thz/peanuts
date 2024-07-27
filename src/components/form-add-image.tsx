@@ -19,9 +19,17 @@ export const FormAddImage = () => {
 
     const { setAvatarUrl, avatarUrl, user } = useImage()
 
-    const [url, setUrl] = useState<string>(user!.avatarUrl!)
+    const src = user!.avatarUrl ?? "/images/cat.webp"
+
+    const [url, setUrl] = useState<string>(src)
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const [isError, setIsError] = useState<boolean>(false)
+
+    const isUrlValid = (
+        url !== undefined &&
+        url !== "" &&
+        url !== "/images/cat.webp"
+    )
 
     const {
         register,
@@ -107,7 +115,7 @@ export const FormAddImage = () => {
                     <AvatarAdmin
                         src={url}
                         fallBack={
-                            (url !== undefined && url !== "")
+                            isUrlValid
                                 ? `${url[0]}${url[1]}`
                                 : "AA"
                         }

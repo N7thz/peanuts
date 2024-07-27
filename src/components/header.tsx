@@ -19,6 +19,8 @@ export const Header = () => {
 
     const [isSelect, setIsSelect] = useState<string>(options[0])
 
+    console.log(user)
+
     return (
         <header className="h-1/4 w-full relative">
             <Image
