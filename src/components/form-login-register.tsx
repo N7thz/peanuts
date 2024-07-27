@@ -36,8 +36,6 @@ export const FormLoginRegister = ({
         resolver: zodResolver(FormLoginSchema)
     })
 
-    console.log(pathname)
-
     return (
         <>
             <form onSubmit={handleSubmit(functionPage)}>

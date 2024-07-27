@@ -13,7 +13,7 @@ model User {
   avatarUrl String? @map("avatar_url")
   email     String  @unique
   password  String
-  role      String @unique
+  role      String  @unique
 
   @@map("users")
 }

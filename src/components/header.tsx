@@ -6,10 +6,14 @@ import { motion } from "framer-motion"
 import { DialogImageAvatar } from "./dialog-image-avatar"
 import { useImage } from "@/context/image-provider"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 
 export const Header = () => {
 
     const { user } = useImage()
+    const { refresh } = useRouter()
+
+    if (!user) refresh()
 
     const options = [
         "Mais recentes",
@@ -18,8 +22,6 @@ export const Header = () => {
     ]
 
     const [isSelect, setIsSelect] = useState<string>(options[0])
-
-    console.log(user)
 
     return (
         <header className="h-1/4 w-full relative">

@@ -25,17 +25,14 @@ export const PostCard = ({ post }: PostProps) => {
             className="overflow-hidden"
         >
             {
-                bannerUrl
-                    ? <Image
-                        src={bannerUrl}
-                        width={1000}
-                        height={200}
-                        alt="image-post"
-                        className="w-full h-[300px] object-cover"
-                    />
-                    : <div
-                        className="w-full h-[300px] bg-secondary animate-pulse"
-                    />
+                bannerUrl &&
+                <Image
+                    src={bannerUrl}
+                    width={1000}
+                    height={200}
+                    alt="image-post"
+                    className="w-full h-[300px] object-cover"
+                />
             }
             <CardHeader>
                 <div className="w-full flex items-center justify-between">

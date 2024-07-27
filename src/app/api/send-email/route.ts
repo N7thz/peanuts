@@ -11,8 +11,6 @@ export async function POST(req: NextRequest) {
 
     const { message, subject } = body
 
-    console.log(message, subject)
-
     try {
         const data = await resend.emails.send({
             from: 'Nathan <onboarding@resend.dev>',

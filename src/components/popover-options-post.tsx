@@ -18,7 +18,6 @@ export const PopoverOptionsPost = ({ post }: PostProps) => {
     const [isUpdated, setIsUpdated] = useState<boolean>(false)
     const [isNotUpdated, setIsNotUpdated] = useState<boolean>(false)
 
-
     return (
         <>
             <Popover>
@@ -32,7 +31,7 @@ export const PopoverOptionsPost = ({ post }: PostProps) => {
                     className="flex gap-3"
                 >
                     <DialogOptionsPost
-                        title="Update"
+                        title={post.title}
                         description="update a post"
                         trigger={
                             <Button variant="ghost">
@@ -45,7 +44,7 @@ export const PopoverOptionsPost = ({ post }: PostProps) => {
                         </ScrollArea>
                     </DialogOptionsPost>
                     <DialogOptionsPost
-                        title="Delete"
+                        title={post.title}
                         description="delete a post"
                         trigger={
                             <Button variant="ghost">

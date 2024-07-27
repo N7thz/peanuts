@@ -13,8 +13,11 @@ import { FormAddPostSchema } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ItemLinkArray } from "./itens-link-array"
 import { createPost } from "@/hooks/use-service"
+import { useRouter } from "next/navigation"
 
 export const FormAddPost = () => {
+
+    const { refresh } = useRouter()
 
     const {
         register,
@@ -35,14 +38,12 @@ export const FormAddPost = () => {
 
     function addPost(data: FormAddPostType) {
 
-        console.log(data)
-
         createPost(data)
             .then(res => {
                 const { status } = res
 
                 if (status === 200) {
-                    window.location.reload()
+                    refresh()
                 }
             })
             .catch(err => console.log(err))

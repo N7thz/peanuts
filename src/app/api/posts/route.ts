@@ -3,13 +3,8 @@ import { FormAddPostType } from "@/@types"
 import { NextRequest, NextResponse } from "next/server"
 import { validateToken } from "@/lib/validate-token"
 import { getLinkId } from "@/lib/get-link-id"
-import { Link, Post } from "@prisma/client"
 
 export async function GET(request: NextRequest) {
-
-    
-
-    const post = await prisma.post.findFirst()
 
     const decoded = validateToken(request)
 
@@ -28,34 +23,35 @@ export async function POST(request: NextRequest) {
 
     const decoded = validateToken(request)
 
-    if (decoded) {
+    if (!decoded) return NextResponse.json(
+        "unauthorized", {
+        status: 401,
+        statusText: "Error in request"
+    })
 
-        const postRequest: FormAddPostType = await request.json()
+    const postRequest: FormAddPostType = await request.json()
 
-        const { title, text, image_url, links: [link] } = postRequest
+    const { title, text, image_url, links: [link] } = postRequest
 
-        console.log(postRequest)
+    const linkId = await getLinkId(link)
 
-        const linkId = await getLinkId(link)
-
-        const post = {
-            title,
-            text,
-            linkId,
-            bannerUrl: image_url ?? null,
-            createdAt: new Date()
-        }
-
-        const postCreated = await prisma.post.create({
-            data: post
-        })
-
-        if (postCreated) return NextResponse.json(
-            postCreated,
-            {
-                status: 200,
-                statusText: "success"
-            }
-        )
+    const post = {
+        title,
+        text,
+        linkId,
+        bannerUrl: image_url ?? null,
+        createdAt: new Date()
     }
+
+    const postCreated = await prisma.post.create({
+        data: post
+    })
+
+    if (postCreated) return NextResponse.json(
+        postCreated,
+        {
+            status: 200,
+            statusText: "success"
+        }
+    )
 }

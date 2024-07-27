@@ -9,23 +9,17 @@ export async function POST(request: NextRequest) {
 
     const { email, password }: User = await request.json()
 
-    console.log({ email, password })
-
     const user = await prisma.user.findUnique({
         where: {
             role: "ADMIN"
         }
     })
 
-    console.log(user)
-
     if (user) {
         return NextResponse.json("ADMIN already exist", {
             status: 400
         })
     }
-
-    console.log("sexo")
 
     const newUser = await prisma.user.create({
         data: {

@@ -14,10 +14,12 @@ import { DialogFooter } from "./ui/dialog"
 import { ErrorSpan } from "./error-span"
 import { Toaster } from "./toaster"
 import { twMerge } from "tailwind-merge"
+import { useRouter } from "next/navigation"
 
 export const FormAddImage = () => {
 
     const { setAvatarUrl, avatarUrl, user } = useImage()
+    const { refresh } = useRouter()
 
     const src = user!.avatarUrl ?? "/images/cat.webp"
 
@@ -51,8 +53,6 @@ export const FormAddImage = () => {
             .then(res => {
                 const { status, data } = res
 
-                console.log(data)
-
                 if (status == 200) {
 
                     setIsOpen(true)
@@ -60,7 +60,7 @@ export const FormAddImage = () => {
                     reset()
 
                     setTimeout(() => setIsOpen(false), 2000)
-                    setTimeout(() => window.location.reload(), 3000)
+                    setTimeout(() => refresh(), 3000)
                 } else {
 
                     setIsError(true)
@@ -70,8 +70,6 @@ export const FormAddImage = () => {
             })
             .catch(err => console.log(err))
     }
-
-    console.log(url)
 
     function addImage(data: FormAddImageType) {
 

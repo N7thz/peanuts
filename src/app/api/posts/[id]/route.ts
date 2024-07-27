@@ -1,14 +1,10 @@
-import { ContextProps } from "@/@types"
-import { getLinkId } from "@/lib/get-link-id"
+import { ContextProps, UpdatePostRequest } from "@/@types"
 import { prisma } from "@/lib/prisma"
+import { updatePost } from "@/lib/update-post"
 import { validateToken } from "@/lib/validate-token"
 import { NextRequest, NextResponse } from "next/server"
 
 export async function PUT(request: NextRequest, context: ContextProps) {
-
-    const { params: { id } } = context
-
-    
 
     const decoded = validateToken(request)
 
@@ -18,7 +14,23 @@ export async function PUT(request: NextRequest, context: ContextProps) {
         statusText: "Error in request"
     })
 
-    
+    const { params: { id } } = context
+
+    const postRequest: UpdatePostRequest = await request.json()
+
+    const object = await updatePost(id, postRequest)
+
+    if (!object) return
+
+    const { post, newLink } = object
+
+    if (post || newLink) return NextResponse.json(
+        post,
+        {
+            status: 200,
+            statusText: "success"
+        }
+    )
 }
 
 export async function DELETE(request: NextRequest, context: ContextProps) {
@@ -33,9 +45,15 @@ export async function DELETE(request: NextRequest, context: ContextProps) {
         statusText: "Error in request"
     })
 
-    await prisma.post.delete({
+    const postDeleted = await prisma.post.delete({
         where: {
             id
+        }
+    })
+
+    await prisma.link.delete({
+        where: {
+            id: postDeleted.id
         }
     })
 

@@ -34,6 +34,9 @@ CREATE TABLE "links" (
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "users_role_key" ON "users"("role");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "posts_created_at_key" ON "posts"("created_at");
 
 -- AddForeignKey

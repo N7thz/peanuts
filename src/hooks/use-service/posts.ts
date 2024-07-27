@@ -7,7 +7,8 @@ export async function getAllPosts() {
 
     const url = "/posts"
 
-    const response: Post[] = await api.get(url)
+    const response: Post[] = await api
+        .get(url)
         .then(res => res.data)
         .catch(err => console.log(err))
 

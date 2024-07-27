@@ -7,13 +7,17 @@ import { Label } from "./ui/label"
 import { Textarea } from "./ui/textarea"
 import { Card } from "./ui/card"
 import { ErrorSpan } from "./error-span"
-import { FormUpdatePostType } from "@/@types"
+import { FormUpdatePostType, UpdatePostRequest } from "@/@types"
 import { FormUpdatePostSchema } from "@/schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { updatePost } from "@/hooks/use-service/posts"
 import { Post } from "@prisma/client"
+import { useRouter } from "next/navigation"
+import { getLinkId } from "@/lib/get-link-id"
 
-export const FormUpdatePost = ({ post: { id } }: { post: Post }) => {
+export const FormUpdatePost = ({ post: { id, linkId } }: { post: Post }) => {
+
+    const { refresh } = useRouter()
 
     const {
         register,
@@ -26,20 +30,20 @@ export const FormUpdatePost = ({ post: { id } }: { post: Post }) => {
 
     const url = watch("image_url") ?? "/images/cat.webp"
 
+    const isUrlExist = !url || url === ""
+
     function addPost(data: FormUpdatePostType) {
 
-        console.log(data)
+        const post: UpdatePostRequest = { ...data, linkId }
 
-        updatePost(data, id)
+        updatePost(post, id)
             .then(res => {
                 const { status } = res
 
-                if (status === 200) window.location.reload()
+                if (status === 200) refresh()
             })
             .catch(err => console.log(err))
     }
-
-    const isUrlExist = !url || url === ""
 
     return (
         <form

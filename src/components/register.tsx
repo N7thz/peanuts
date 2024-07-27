@@ -15,9 +15,7 @@ export const Register = () => {
     function register(data: FormLoginType) {
         postUser(data)
             .then(res => {
-                const { status, data } = res
-
-                console.log(data)
+                const { status } = res
 
                 if (status === 200) {
                     push("/login")

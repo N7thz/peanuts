@@ -33,6 +33,10 @@ export type FormContactType = z.infer<typeof FormContactSchema>
 export type FormAddPostType = z.infer<typeof FormAddPostSchema>
 export type FormUpdatePostType = z.infer<typeof FormUpdatePostSchema>
 
+export interface UpdatePostRequest extends FormUpdatePostType {
+    linkId: string
+}
+
 export interface getCredentialUserResponse {
     token: string
     email: string
