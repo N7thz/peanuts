@@ -4,15 +4,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { validateToken } from "@/lib/validate-token"
 import { getLinkId } from "@/lib/get-link-id"
 
-export async function GET(request: NextRequest) {
-
-    const decoded = validateToken(request)
-
-    if (!decoded) return NextResponse.json(
-        "unauthorized", {
-        status: 401,
-        statusText: "Error in request"
-    })
+export async function GET() {
 
     const posts = await prisma.post.findMany()
 
