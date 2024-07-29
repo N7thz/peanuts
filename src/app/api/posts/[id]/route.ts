@@ -6,14 +6,6 @@ import { NextRequest, NextResponse } from "next/server"
 
 export async function GET(request: NextRequest, context: ContextProps) {
 
-    const decoded = validateToken(request)
-
-    if (!decoded) return NextResponse.json(
-        "unauthorized", {
-        status: 401,
-        statusText: "Error in request"
-    })
-
     const { params: { id } } = context
 
     const post = await prisma.post.findUnique({
