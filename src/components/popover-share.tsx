@@ -29,7 +29,7 @@ export const PopoverShare = ({ post: { linkId: id } }: { post: Post }) => {
 
     const { title } = linkResponse
 
-    const link = `https://peanuts-livid.vercel.app/${id}`
+    const link = `https://peanuts-livid.vercel.app/posts/${id}`
 
     return (
         <Popover>
