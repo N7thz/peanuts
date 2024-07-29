@@ -27,7 +27,9 @@ export const PopoverShare = ({ post: { linkId: id } }: { post: Post }) => {
         <LoaderCircle className="animate-spin" />
     )
 
-    const { title, link } = linkResponse
+    const { title } = linkResponse
+
+    const link = `https://peanuts-livid.vercel.app/${id}`
 
     return (
         <Popover>
