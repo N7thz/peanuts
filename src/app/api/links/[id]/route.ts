@@ -1,8 +1,8 @@
 import { ContextProps } from "@/@types"
 import { prisma } from "@/lib/prisma"
-import { NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 
-export async function GET(context: ContextProps) {
+export async function GET(request: NextRequest, context: ContextProps) {
 
     const { params: { id } } = context
 
