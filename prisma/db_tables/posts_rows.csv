@@ -1,5 +1,0 @@
-id,title,text,banner_url,created_at,linkId
-7b57ae3a-8a64-47f3-ad63-0460b3e3b704,Testes unitários,"finalizando mais uma aplicação, dessa vez focada no aprendizado de duas tecnologias focadas em teste, o Jest e a ""test-library"" para teste do front-end para confirmar que todos os componentes estão funcionando corretamente.",https://media.licdn.com/dms/image/D4D22AQHrQB1ahWecSQ/feedshare-shrink_2048_1536/0/1716230907432?e=1724284800&v=beta&t=JTCs4Lse9YaFV1luAsJw5p0UsQJDoAFeVG3Xe3P1Hak,2024-07-27 12:50:31.516,ae185e5e-839d-4f9d-8190-c62348f8979b
-526bc8ac-04e3-43d1-aed9-a777d871bd28,Criação de aplicação,"Primeira aplicação em electronJs finalizada.
-Fiz um editor de texto onde é possível, criar ,salvar e deletar os arquivos.
-Foram usados o tiptap para a parte do editor e segui o pattern de composição para construir os componentes.",https://media.licdn.com/dms/image/D4D22AQFz6A7Xo3XE4g/feedshare-shrink_1280/0/1719207246331?e=1724284800&v=beta&t=eqMnkTCDR1HSBtsAx23ISDBirzXjaSowbfQ7qVQkyYc,2024-07-27 12:51:05.443,ceb6a854-bb5f-4bc4-a77b-a11b5c1f8c10
